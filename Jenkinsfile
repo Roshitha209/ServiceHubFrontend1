@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -10,12 +11,6 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Install Node.js
-                    // sh '''
-                    // curl -sL https://deb.nodesource.com/setup_$NODE_VERSION | sudo -E bash -
-                    // sudo apt-get install -y nodejs
-                    // '''
-                    
                     // Install project dependencies
                     sh 'npm install'
                 }
@@ -24,12 +19,13 @@ pipeline {
 
         stage('Build') {
             steps {
+                // Change this to `npm run build` if you are creating a production build
                 sh 'npm run dev'
             }
         }
+    }
 
-
-        post {
+    post {
         always {
             // Clean up actions
             cleanWs()
